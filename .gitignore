@@ -1,0 +1,19 @@
+# User-specific config (use agent-skills-config.example.yaml as template)
+agent-skills-config.yaml
+
+# Logs
+*.log
+agent-skills-update.log
+
+# Temp directories
+.temp-agent-skills-update/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
