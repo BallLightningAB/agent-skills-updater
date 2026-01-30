@@ -2,7 +2,7 @@
 
 <#
 .SYNOPSIS
-    Agent Skills Updater v1.0.1
+    Agent Skills Updater v1.0.2
 .DESCRIPTION
     Automated skill management for AI coding assistants. Clones skills from multiple
     GitHub repositories, handles different repository structures (standard, root,

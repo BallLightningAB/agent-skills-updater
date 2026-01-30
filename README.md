@@ -1,10 +1,12 @@
 # Agent Skills Updater
 
-![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)
+![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)
 ![PowerShell](https://img.shields.io/badge/powershell-5.1%2B-blue.svg)
 
 Automated skill management for AI coding assistants. Keep your agent skills up-to-date across **Windsurf**, **Cursor**, **Claude Code**, **GitHub Copilot**, **Opencode**, **Moltbot**, other AI-powered IDEs and Agentic tools.
+
+**Project Board**: Track development and future releases at [GitHub Project](https://github.com/users/BallLightningAB/projects/7)
 
 ## What Are Skills?
 
