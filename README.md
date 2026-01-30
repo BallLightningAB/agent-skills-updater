@@ -1,5 +1,9 @@
 # Agent Skills Updater
 
+![Version](https://img.shields.io/badge/version-1.0.1-blue.svg)
+![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)
+![PowerShell](https://img.shields.io/badge/powershell-5.1%2B-blue.svg)
+
 Automated skill management for AI coding assistants. Keep your agent skills up-to-date across **Windsurf**, **Cursor**, **Claude Code**, **GitHub Copilot**, **Opencode**, **Moltbot**, other AI-powered IDEs and Agentic tools.
 
 ## What Are Skills?
@@ -7,7 +11,7 @@ Automated skill management for AI coding assistants. Keep your agent skills up-t
 Skills are markdown files that provide context, instructions, and capabilities to AI coding assistants. They extend your AI's knowledge with specific expertise like SEO optimization, copywriting, frontend design, and more.
 
 - **Discover skills**: [skills.sh](https://skills.sh/) — Browse and search the ecosystem of available skills
-- **Windsurf skills guide**: [docs.windsurf.com/windsurf/cascade/skills](https://docs.windsurf.com/windsurf/cascade/skills) — Learn how skills work in Windsurf
+- **Windsurf skills guide**: [docs.windsurf.com/windsurf/cascade/skills](https://docs.windsurf.com/windsurf/cascade/skills) — Learn how skills work in Windsurf (and other IDEs)
 - **Manual installation**: Skills are typically installed via your IDE's skill manager or by copying to the appropriate directory (see [Supported IDEs](#supported-ides))
 
 ## The Problem
@@ -40,6 +44,7 @@ agent-skills-updater/
 ├── CONTRIBUTING.md                    # Contribution guidelines
 ├── LICENSE                            # Apache-2.0 license
 ├── README.md                          # This file
+├── VERSION                            # Version number (v1.0.0)
 ├── agent-skills-config.example.yaml   # Template config (copy to customize)
 └── agent-skills-update.ps1            # Main PowerShell script
 ```
@@ -240,8 +245,21 @@ Inspired by the growing ecosystem of AI agent skills from:
 - [Resend](https://github.com/resend)
 - Community contributors
 
+## Version History
+
+### v1.0.0 (2026-01-30)
+- Initial release
+- Multi-source skill updates from GitHub repositories
+- Support for 4 repository structures (standard, root, template, multi)
+- Branch-specific cloning
+- Lockfile tracking with timestamps
+- Cross-platform support (Windows PowerShell 5.1+, PowerShell 7+)
+- List installed skills (`-List`)
+- Dry-run mode (`-WhatIf`)
+- Support for 43+ IDEs and AI coding tools
+
 ## Follow Along
 
 This project and other Ball Lightning AB initiatives are documented on **[The Builder Coil](https://thebuildercoil.com)** — a public builder's log covering the journey of building products, tools, and the Chronomation ecosystem.
 
-Subscribe to **The Upkeep** newsletter for weekly updates on new releases, behind-the-scenes insights, and practical tips for developers and solopreneurs.
+Subscribe to **[The Upkeep](https://theupkeep.balllightningab.com)** newsletter for weekly updates on new releases, behind-the-scenes insights, and practical tips for developers and solopreneurs.

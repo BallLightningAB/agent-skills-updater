@@ -4,6 +4,10 @@ agent-skills-config.yaml
 # Logs
 *.log
 agent-skills-update.log
+skills-update.log
+
+# Keep VERSION file
+!VERSION
 
 # Temp directories
 .temp-agent-skills-update/
