@@ -39,8 +39,8 @@ def _backup_dir(config: AppConfig) -> Path:
 
 
 def _timestamp_label() -> str:
-    """Generate a filesystem-safe UTC timestamp label."""
-    return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    """Generate a filesystem-safe UTC timestamp label with microseconds for uniqueness."""
+    return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S_%fZ")
 
 
 def create_backup(config: AppConfig, lockfile: Lockfile) -> BackupInfo | None:
@@ -73,7 +73,7 @@ def create_backup(config: AppConfig, lockfile: Lockfile) -> BackupInfo | None:
             if skill_dir.is_dir():
                 skill_dest = dest / skill_name
                 skill_dest.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copytree(skill_dir, skill_dest)
+                shutil.copytree(skill_dir, skill_dest, dirs_exist_ok=True)
                 if skill_name not in backed_up_skills:
                     backed_up_skills.append(skill_name)
 

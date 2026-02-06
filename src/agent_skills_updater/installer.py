@@ -171,6 +171,8 @@ def install_skills(
 
             any_copied = False
             for target_path in config.skill_target_paths:
+                if not target_path.is_dir():
+                    continue
                 try:
                     copied = _copy_skill(
                         skill_dir,
