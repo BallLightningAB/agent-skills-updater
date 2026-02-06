@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-skills-updater"
+version = "0.1.0"
+description = "Automated skill management for AI coding assistants"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.12"
+authors = [
+    { name = "Ball Lightning AB", email = "info@balllightning.cloud" },
+]
+keywords = ["ai", "skills", "agent", "windsurf", "cursor", "copilot"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "click>=8.1",
+    "pyyaml>=6.0",
+    "requests>=2.31",
+    "rich>=13.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-mock>=3.12",
+    "ruff>=0.1",
+]
+
+[project.scripts]
+agent-skills-update = "agent_skills_updater.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/BallLightningAB/agent-skills-updater"
+Repository = "https://github.com/BallLightningAB/agent-skills-updater"
+Issues = "https://github.com/BallLightningAB/agent-skills-updater/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

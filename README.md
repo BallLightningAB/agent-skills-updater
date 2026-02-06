@@ -1,10 +1,12 @@
 # Agent Skills Updater
 
-![Version](https://img.shields.io/badge/version-1.0.2-blue.svg)
+![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)
-![PowerShell](https://img.shields.io/badge/powershell-5.1%2B-blue.svg)
+![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)
 
-Automated skill management for AI coding assistants. Keep your agent skills up-to-date across **Windsurf**, **Cursor**, **Claude Code**, **GitHub Copilot**, **Opencode**, **Moltbot**, other AI-powered IDEs and Agentic tools.
+Automated skill management for AI coding assistants. Keep your agent skills up-to-date across **Windsurf**, **Cursor**, **Claude Code**, **GitHub Copilot**, **Opencode**, other AI-powered IDEs and Agentic tools.
+
+> **🚧 Python rewrite in progress.** The original PowerShell version is available in the [`legacy/`](legacy/) folder. See [Legacy PowerShell Version](#legacy-powershell-version) below.
 
 **Project Board**: Track development and future releases at [GitHub Project](https://github.com/users/BallLightningAB/projects/7)
 
@@ -25,59 +27,101 @@ AI coding assistants use "skills" (markdown files with context and instructions)
 - Skills in `template/` subdirectories
 - Multiple skills in subdirectories
 
-Keeping these updated manually is tedious. This script automates the process.
+Keeping these updated manually is tedious. This tool automates the process.
 
 ## Features
 
-- **Multi-source updates** — Clone skills from any public GitHub repository
+- **Multi-source updates** — Clone skills from any public Git repository
 - **Structure-aware** — Handles root, template, multi-skill, and standard repo layouts
 - **Branch support** — Clone from specific branches (e.g., `canary`, `main`)
 - **Lockfile tracking** — Maintains `.skill-lock.json` with install/update timestamps
 - **Configurable** — External YAML config for easy customization
 - **Schedulable** — Run manually or via Task Scheduler / cron
 - **List installed** — See what skills you currently have installed
-- **Dry-run mode** — Preview changes before applying them (`-WhatIf`)
+- **Dry-run mode** — Preview changes before applying them
+- **Backup & rollback** — Automatic backups before updates with restore support
+- **Security** — Interactive allowlist for non-GitHub repository hosts
 
 ## Repository Structure
 
 ```
 agent-skills-updater/
-├── .gitignore                         # Excludes user config and logs
+├── pyproject.toml                     # Python package config
+├── README.md                          # This file
 ├── CONTRIBUTING.md                    # Contribution guidelines
 ├── LICENSE                            # Apache-2.0 license
-├── README.md                          # This file
-├── VERSION                            # Version number (v1.0.0)
-├── agent-skills-config.example.yaml   # Template config (copy to customize)
-└── agent-skills-update.ps1            # Main PowerShell script
+├── .gitignore
+├── src/
+│   └── agent_skills_updater/
+│       ├── __init__.py                # Package version
+│       ├── cli.py                     # Click-based CLI
+│       ├── config.py                  # YAML config loading
+│       ├── downloader.py              # Git clone + archive fallback
+│       ├── installer.py               # Skill installation logic
+│       ├── lockfile.py                # Lockfile management
+│       └── backup.py                  # Backup and rollback
+├── tests/
+│   ├── conftest.py
+│   └── ...
+└── legacy/
+    ├── agent-skills-update.ps1        # Original PowerShell script
+    └── agent-skills-config.example.yaml
 ```
 
 ## Quick Start
 
-### 1. Clone this repository
+### Installation
+
+```bash
+pip install agent-skills-updater
+```
+
+Or install from source:
 
 ```bash
 git clone https://github.com/BallLightningAB/agent-skills-updater.git
 cd agent-skills-updater
+pip install -e ".[dev]"
 ```
 
-### 2. Copy and customize the config
+### Usage
 
 ```bash
-cp agent-skills-config.example.yaml agent-skills-config.yaml
-```
+# Update all skills
+agent-skills-update
 
-Edit `agent-skills-config.yaml` to add/remove skill repositories.
+# Force overwrite existing skills
+agent-skills-update --force
 
-### 3. Run the script
+# Update specific skills only
+agent-skills-update --skills copywriting,seo-audit
 
-**Windows (PowerShell 5.1+):**
-```powershell
-.\agent-skills-update.ps1
-```
+# Show installed skills
+agent-skills-update --list
 
-**macOS/Linux (PowerShell 7+):**
-```bash
-pwsh ./agent-skills-update.ps1
+# Dry run (show what would be updated)
+agent-skills-update --dry-run
+
+# Verbose output
+agent-skills-update --verbose
+
+# Trust all hosts (CI mode, skip prompts)
+agent-skills-update --trust-all
+
+# List available backups
+agent-skills-update --list-backups
+
+# Roll back a specific skill
+agent-skills-update --rollback copywriting
+
+# Roll back all skills to last backup
+agent-skills-update --rollback-all
+
+# Machine-readable output (for automation)
+agent-skills-update --json
+
+# Custom config path
+agent-skills-update --config ~/my-config.yaml
 ```
 
 ## Configuration
@@ -90,6 +134,13 @@ settings:
   windsurfSkillsPath: ~/.codeium/windsurf/skills
   tempPath: ~/.temp-agent-skills-update
   logPath: ~/scripts/agent-skills-update.log
+  backupPath: ~/.agent-skills-updater/backups
+  keepBackups: 5
+
+  # Auto-updated when user selects "Allow always" for non-GitHub hosts
+  allowedHosts:
+    - gitlab.com
+    - bitbucket.org
 
 repositories:
   coreyhaines31/marketingskills:
@@ -115,66 +166,14 @@ repositories:
 | **template** | `structure: template` | `SKILL.md` in `template/` subdirectory |
 | **multi** | `structure: multi` | Multiple skills as subdirectories with `SKILL.md` each |
 
-## Usage
-
-```powershell
-# Update all skills
-.\agent-skills-update.ps1
-
-# Force overwrite existing skills
-.\agent-skills-update.ps1 -Force
-
-# Update specific skills only
-.\agent-skills-update.ps1 -SpecificSkills copywriting,seo-audit
-
-# Show installed skills
-.\agent-skills-update.ps1 -List
-
-# Dry run (show what would be updated)
-.\agent-skills-update.ps1 -WhatIf
-
-# Mark as scheduled run (for logging)
-.\agent-skills-update.ps1 -Scheduled
-```
-
-## Scheduling Updates
-
-### Windows Task Scheduler
-
-1. Open Task Scheduler
-2. Create Basic Task → Name it "Agent Skills Update"
-3. Trigger: Daily or Weekly
-4. Action: Start a program
-   - Program: `powershell.exe`
-   - Arguments: `-ExecutionPolicy Bypass -File "C:\path\to\agent-skills-update.ps1" -Scheduled`
-5. Finish
-
-### macOS/Linux (cron)
-
-```bash
-# Edit crontab
-crontab -e
-
-# Add weekly update (Sundays at 3am)
-0 3 * * 0 pwsh /path/to/agent-skills-update.ps1 -Scheduled
-```
-
 ## Supported IDEs
 
-The script copies skills to these locations by default:
+The tool copies skills to these locations by default:
 
 | IDE | Default Path |
 |-----|--------------|
 | Generic agents | `~/.agents/skills` |
 | Windsurf | `~/.codeium/windsurf/skills` |
-
-Add more paths in `agent-skills-config.yaml` under `settings`.
-
-### Complete list of supported IDEs as per 2026-01-30
-
-| IDE            | Default Path                          |
-| -------------- | ------------------------------------- |
-| Generic agents | `~/.config/agents/skills`             |
 | Amp            | `~/.config/agents/skills`             |
 | Kimi Code CLI  | `~/.config/agents/skills`             |
 | Antigravity    | `~/.gemini/antigravity/global_skills` |
@@ -218,10 +217,9 @@ Add more paths in `agent-skills-config.yaml` under `settings`.
 
 ## Cross-Platform Notes
 
-- **Windows**: PowerShell 5.1+ (built-in)
-- **macOS/Linux**: Requires [PowerShell 7+](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell)
+- **Python 3.12+** required
 - Paths use `~` which expands correctly on all platforms
-- Git must be installed and available in PATH
+- Git must be installed and available in PATH (archive fallback available when git is unavailable)
 
 ## Contributing
 
@@ -247,9 +245,27 @@ Inspired by the growing ecosystem of AI agent skills from:
 - [Resend](https://github.com/resend)
 - Community contributors
 
+## Legacy PowerShell Version
+
+The original PowerShell version (v1.0.2) is available in the [`legacy/`](legacy/) folder. It requires PowerShell 5.1+ (Windows) or PowerShell 7+ (macOS/Linux). See [`legacy/agent-skills-config.example.yaml`](legacy/agent-skills-config.example.yaml) for configuration.
+
+### Migrating from PowerShell
+
+1. Install the Python version: `pip install agent-skills-updater`
+2. Your existing `agent-skills-config.yaml` is compatible — no changes needed
+3. Run `agent-skills-update` instead of `.\agent-skills-update.ps1`
+4. The lockfile format (`.skill-lock.json`) is preserved
+
 ## Version History
 
-### v1.0.0 (2026-01-30)
+### v0.1.0 (Python rewrite — in progress)
+- Python 3.12+ rewrite with pip installation
+- Click-based CLI with `--dry-run`, `--force`, `--verbose`, `--json` flags
+- Backup and rollback support
+- Interactive security allowlist for non-GitHub repos
+- Same YAML config format as PowerShell version
+
+### v1.0.0 (2026-01-30) — PowerShell (legacy)
 - Initial release
 - Multi-source skill updates from GitHub repositories
 - Support for 4 repository structures (standard, root, template, multi)

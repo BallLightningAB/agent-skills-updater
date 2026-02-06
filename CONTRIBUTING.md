@@ -7,7 +7,7 @@ Thank you for your interest in contributing!
 ### Reporting Issues
 
 - Check existing issues before creating a new one
-- Include your PowerShell version (`$PSVersionTable.PSVersion`)
+- Include your Python version (`python --version`)
 - Include your OS and version
 - Provide steps to reproduce the issue
 
@@ -16,7 +16,7 @@ Thank you for your interest in contributing!
 If you know of a public skill repository that should be included in the default config:
 
 1. Fork the repository
-2. Add the repository to `agent-skills-config.example.yaml`
+2. Add the repository to `legacy/agent-skills-config.example.yaml`
 3. Test that the skills sync correctly
 4. Submit a pull request with:
    - The repository URL
@@ -28,28 +28,34 @@ If you know of a public skill repository that should be included in the default 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/my-feature`)
 3. Make your changes
-4. Test on your platform (Windows/macOS/Linux)
-5. Submit a pull request
+4. Run tests: `pytest`
+5. Run linter: `ruff check src/ tests/`
+6. Test on your platform (Windows/macOS/Linux)
+7. Submit a pull request
 
 ### Code Style
 
-- Follow existing PowerShell conventions
-- Use `Write-Log` for all output
+- Python 3.12+ with type hints
+- Format and lint with `ruff`
 - Keep cross-platform compatibility in mind
-- Test with both PowerShell 5.1 (Windows) and PowerShell 7+ (cross-platform)
+- Use `rich` for terminal output
+- Use `click` for CLI arguments
 
 ## Development Setup
 
-```powershell
+```bash
 # Clone your fork
 git clone https://github.com/YOUR-USERNAME/agent-skills-updater.git
 cd agent-skills-updater
 
-# Copy config
-cp agent-skills-config.example.yaml agent-skills-config.yaml
+# Install in development mode
+pip install -e ".[dev]"
 
-# Test the script
-.\agent-skills-update.ps1 -Force
+# Run tests
+pytest
+
+# Run linter
+ruff check src/ tests/
 ```
 
 ## Questions?
