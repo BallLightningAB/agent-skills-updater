@@ -1,9 +1,6 @@
 """Tests for backup creation and rollback."""
 
-import json
 from pathlib import Path
-
-import pytest
 
 from agent_skills_updater.backup import (
     BackupInfo,

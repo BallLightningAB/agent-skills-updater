@@ -2,8 +2,6 @@
 
 from pathlib import Path
 
-import pytest
-
 from agent_skills_updater.config import AppConfig, RepoConfig
 from agent_skills_updater.downloader import DownloadResult
 from agent_skills_updater.installer import InstalledSkill, install_skills

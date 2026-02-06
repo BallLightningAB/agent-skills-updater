@@ -190,7 +190,7 @@ def _download_one(
         if git_available and _is_github_url(repo.url):
             if ctx.verbose:
                 ctx.console.print(
-                    f"  [dim]Git failed, trying archive fallback...[/]"
+                    "  [dim]Git failed, trying archive fallback...[/]"
                 )
             try:
                 if dest.exists():

@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import shutil
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from agent_skills_updater.cli import Context
-    from agent_skills_updater.config import AppConfig, RepoConfig
+    from agent_skills_updater.config import AppConfig
     from agent_skills_updater.downloader import DownloadResult
 
 
@@ -26,7 +26,7 @@ class InstalledSkill:
     updated_at: str = field(default_factory=lambda: "")
 
     def __post_init__(self) -> None:
-        now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        now = datetime.now(UTC).isoformat(timespec="seconds")
         if not self.installed_at:
             self.installed_at = now
         if not self.updated_at:

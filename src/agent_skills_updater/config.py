@@ -9,7 +9,6 @@ from typing import Any
 
 import yaml
 
-
 # Default config search paths (checked in order)
 _DEFAULT_CONFIG_NAMES = [
     "agent-skills-config.yaml",

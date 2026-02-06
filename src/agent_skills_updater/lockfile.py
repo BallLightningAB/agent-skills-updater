@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import tempfile
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
@@ -24,7 +24,7 @@ class Lockfile:
     def update_entry(self, skill: InstalledSkill) -> None:
         """Add or update a skill entry in the lockfile."""
         existing = self.entries.get(skill.name)
-        now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        now = datetime.now(UTC).isoformat(timespec="seconds")
 
         if existing:
             self.entries[skill.name] = {

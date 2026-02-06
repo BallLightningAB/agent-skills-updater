@@ -61,7 +61,9 @@ pass_context = click.make_pass_decorator(Context, ensure=True)
 @click.option("--dry-run", is_flag=True, help="Preview changes without applying them.")
 @click.option("--force", is_flag=True, help="Overwrite existing skills.")
 @click.option("--verbose", is_flag=True, help="Show detailed output.")
-@click.option("--trust-all", is_flag=True, help="Trust all repository hosts (skip prompts, for CI).")
+@click.option(
+    "--trust-all", is_flag=True, help="Trust all repository hosts (skip prompts, for CI)."
+)
 @click.option("--json", "json_output", is_flag=True, help="Machine-readable JSON output.")
 @click.option(
     "--skills",

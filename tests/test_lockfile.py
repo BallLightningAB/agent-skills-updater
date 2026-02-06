@@ -3,8 +3,6 @@
 import json
 from pathlib import Path
 
-import pytest
-
 from agent_skills_updater.config import AppConfig
 from agent_skills_updater.installer import InstalledSkill
 from agent_skills_updater.lockfile import Lockfile, load_lockfile, save_lockfile

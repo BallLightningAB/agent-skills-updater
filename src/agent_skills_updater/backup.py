@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import shutil
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -40,7 +40,7 @@ def _backup_dir(config: AppConfig) -> Path:
 
 def _timestamp_label() -> str:
     """Generate a filesystem-safe UTC timestamp label with microseconds for uniqueness."""
-    return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S_%fZ")
+    return datetime.now(UTC).strftime("%Y%m%dT%H%M%S_%fZ")
 
 
 def create_backup(config: AppConfig, lockfile: Lockfile) -> BackupInfo | None:
@@ -87,7 +87,7 @@ def create_backup(config: AppConfig, lockfile: Lockfile) -> BackupInfo | None:
     # Save metadata
     meta = {
         "timestamp": ts,
-        "created": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "created": datetime.now(UTC).isoformat(timespec="seconds"),
         "skills": backed_up_skills,
     }
     (backup_root / "backup-meta.json").write_text(
