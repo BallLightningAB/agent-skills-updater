@@ -4,18 +4,20 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agent-skills-updater"
-version = "0.1.0"
+version = "0.1.1"
 description = "Automated skill management for AI coding assistants"
 readme = "README.md"
-license = "Apache-2.0"
+license = { text = "Apache-2.0" }
+license-files = ["LICENSE.md"]
 requires-python = ">=3.12"
 authors = [
-    { name = "Ball Lightning AB", email = "info@balllightning.cloud" },
+    { name = "Ball Lightning AB", email = "dev@balllightning.cloud" },
 ]
-keywords = ["ai", "skills", "agent", "windsurf", "cursor", "copilot"]
+keywords = ["ai", "skills", "agent", "llm", "windsurf", "cursor", "copilot"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",

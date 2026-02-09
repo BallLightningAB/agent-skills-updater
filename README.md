@@ -1,6 +1,6 @@
 # Agent Skills Updater
 
-![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)
+![Version](https://img.shields.io/badge/version-0.1.1-blue.svg)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)
 ![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)
 
@@ -258,7 +258,7 @@ The original PowerShell version (v1.0.2) is available in the [`legacy/`](legacy/
 
 ## Version History
 
-### v0.1.0 (Python rewrite — in progress)
+### v0.1.1 (Python rewrite — in progress)
 - Python 3.12+ rewrite with pip installation
 - Click-based CLI with `--dry-run`, `--force`, `--verbose`, `--json` flags
 - Backup and rollback support

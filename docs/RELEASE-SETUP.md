@@ -50,8 +50,8 @@ GitHub environments add a layer of protection — only the `publish.yml` workflo
 Once Steps 2 and 3 are done, you can publish to PyPI:
 
 1. Go to [https://github.com/BallLightningAB/agent-skills-updater/releases/new](https://github.com/BallLightningAB/agent-skills-updater/releases/new)
-2. Click **"Choose a tag"** → type `v0.1.0` → click **"Create new tag: v0.1.0 on publish"**
-3. **Release title**: `v0.1.0 — Python Rewrite`
+2. Click **"Choose a tag"** → type `v0.1.1` → click **"Create new tag: v0.1.1 on publish"**
+3. **Release title**: `v0.1.1 — Python Rewrite`
 4. **Description** (suggested):
    ```
    First release of the Python rewrite.
@@ -83,7 +83,7 @@ pip install agent-skills-updater
 
 # Verify CLI works
 agent-skills-update --version
-# Should print: agent-skills-update, version 0.1.0
+# Should print: agent-skills-update, version 0.1.1
 
 agent-skills-update --help
 # Should show all commands and options
