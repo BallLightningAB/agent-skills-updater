@@ -1,12 +1,12 @@
 # Agent Skills Updater
 
-![Version](https://img.shields.io/badge/version-0.1.10-blue.svg)
+![Version](https://img.shields.io/badge/version-0.1.11-blue.svg)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)
 ![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)
 
 Automated skill management for AI coding assistants. Keep your agent skills up-to-date across **Windsurf**, **Cursor**, **Claude Code**, **GitHub Copilot**, **Opencode**, other AI-powered IDEs and Agentic tools.
 
-> **🚧 Python rewrite in progress.** The original PowerShell version is available in the [`legacy/`](legacy/) folder. See [Legacy PowerShell Version](#legacy-powershell-version) below.
+> **Naming convention**: The *package* is `agent-skills-updater` (what you `pip install`). The *CLI command* is `agent-skills-update` (what you run). The original PowerShell version is available in the [`legacy/`](legacy/) folder.
 
 **Project Board**: Track development and future releases at [GitHub Project](https://github.com/users/BallLightningAB/projects/7)
 
@@ -41,6 +41,7 @@ Keeping these updated manually is tedious. This tool automates the process.
 - **Dry-run mode** — Preview changes before applying them
 - **Backup & rollback** — Automatic backups before updates with restore support
 - **Security** — Interactive allowlist for non-GitHub repository hosts
+- **Self-update** — Check for new versions and upgrade from PyPI with one command
 
 ## Repository Structure
 
@@ -59,7 +60,8 @@ agent-skills-updater/
 │       ├── downloader.py              # Git clone + archive fallback
 │       ├── installer.py               # Skill installation logic
 │       ├── lockfile.py                # Lockfile management
-│       └── backup.py                  # Backup and rollback
+│       ├── backup.py                  # Backup and rollback
+│       └── updater.py                 # Self-update and version check
 ├── tests/
 │   ├── conftest.py
 │   └── ...
@@ -97,7 +99,7 @@ agent-skills-update --force
 agent-skills-update --skills copywriting,seo-audit
 
 # Show installed skills
-agent-skills-update --list
+agent-skills-update list
 
 # Dry run (show what would be updated)
 agent-skills-update --dry-run
@@ -109,19 +111,25 @@ agent-skills-update --verbose
 agent-skills-update --trust-all
 
 # List available backups
-agent-skills-update --list-backups
+agent-skills-update list-backups
 
 # Roll back a specific skill
-agent-skills-update --rollback copywriting
+agent-skills-update rollback copywriting
 
 # Roll back all skills to last backup
-agent-skills-update --rollback-all
+agent-skills-update rollback
 
 # Machine-readable output (for automation)
 agent-skills-update --json
 
 # Custom config path
 agent-skills-update --config ~/my-config.yaml
+
+# Update the tool itself
+agent-skills-update self-update
+
+# Skip version check (for CI/scripting)
+agent-skills-update --no-update-check
 ```
 
 ## Configuration
@@ -258,11 +266,14 @@ The original PowerShell version (v1.0.2) is available in the [`legacy/`](legacy/
 
 ## Version History
 
-### v0.1.1 (Python rewrite — in progress)
+### v0.1.10 (Python rewrite)
 - Python 3.12+ rewrite with pip installation
 - Click-based CLI with `--dry-run`, `--force`, `--verbose`, `--json` flags
+- Subcommands: `list`, `rollback`, `list-backups`, `self-update`
+- Automatic version check with PyPI (2s timeout, silent failure)
 - Backup and rollback support
 - Interactive security allowlist for non-GitHub repos
+- Windows Task Scheduler compatibility (ASCII-safe output)
 - Same YAML config format as PowerShell version
 
 ### v1.0.0 (2026-01-30) — PowerShell (legacy)
