@@ -126,6 +126,8 @@ Once Steps 2 and 3 are done, you can publish to PyPI:
 
 ## Step 5: Verify the Installation
 
+> **Naming convention**: The *package* is `agent-skills-updater` (noun — what you `pip install`). The *CLI command* is `agent-skills-update` (verb — what you run). This is intentional.
+
 After the PyPI workflow succeeds (usually takes 1-2 minutes):
 
 ```powershell
