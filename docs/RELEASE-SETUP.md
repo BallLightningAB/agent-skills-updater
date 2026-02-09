@@ -54,18 +54,30 @@ Once Steps 2 and 3 are done, you can publish to PyPI:
 3. **Release title**: `v0.1.1 — Python Rewrite`
 4. **Description** (suggested):
    ```
-   First release of the Python rewrite.
+   # Agent Skills Updater v0.1.1
 
-   ## What's New
-   - Complete Python rewrite (replaces PowerShell version)
-   - `pip install agent-skills-updater`
-   - Click-based CLI with dry-run, force, JSON output
-   - Git clone + archive download fallback
-   - Interactive host security allowlist
-   - 4 repository structure types
-   - Atomic lockfile with UTC timestamps
-   - Timestamped backups with rollback
-   - 44 tests, CI on 3 OS × 2 Python versions
+   Automated skill management for AI coding assistants. Keep your agent skills up-to-date across **Windsurf**, **Cursor**, **Claude Code**, **GitHub Copilot**, **Opencode**, and other AI-powered IDEs.
+
+   ## What's New in v0.1.1
+   - **Complete Python rewrite** (replaces PowerShell version)
+   - **Cross-platform**: Windows, macOS, Linux
+   - **Easy install**: `pip install agent-skills-updater`
+   - **Rich CLI**: dry-run, force, JSON output, verbose mode
+   - **Smart downloads**: Git clone with archive fallback
+   - **Security**: Interactive allowlist for non-GitHub hosts
+   - **Flexible repos**: Supports 4 repository structures
+   - **Atomic operations**: Lockfile with UTC timestamps
+   - **Safe updates**: Timestamped backups with rollback
+   - **Production ready**: 44 tests, CI on 3 OS × 2 Python versions
+
+   ## Quick Start
+   ```bash
+   pip install agent-skills-updater
+   agent-skills-update --help
+   ```
+
+   ## Migration from PowerShell
+   The original PowerShell version is preserved in the `legacy/` folder. Your existing `agent-skills-config.yaml` files are fully compatible with the Python version.
    ```
 5. Click **"Publish release"**
 6. Go to the **Actions** tab to watch the `Publish to PyPI` workflow run
