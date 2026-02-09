@@ -27,6 +27,7 @@ class Context:
         verbose: bool = False,
         trust_all: bool = False,
         json_output: bool = False,
+        no_update_check: bool = False,
     ) -> None:
         self.config_path = config_path
         self.dry_run = dry_run
@@ -34,6 +35,7 @@ class Context:
         self.verbose = verbose
         self.trust_all = trust_all
         self.json_output = json_output
+        self.no_update_check = no_update_check
         self.console = Console(quiet=json_output)
         self.config: AppConfig | None = None
 
@@ -65,6 +67,7 @@ pass_context = click.make_pass_decorator(Context, ensure=True)
     "--trust-all", is_flag=True, help="Trust all repository hosts (skip prompts, for CI)."
 )
 @click.option("--json", "json_output", is_flag=True, help="Machine-readable JSON output.")
+@click.option("--no-update-check", is_flag=True, help="Skip checking for new versions.")
 @click.option(
     "--skills",
     default=None,
@@ -79,6 +82,7 @@ def main(
     verbose: bool,
     trust_all: bool,
     json_output: bool,
+    no_update_check: bool,
     skills: str | None,
 ) -> None:
     """Automated skill management for AI coding assistants.
@@ -100,6 +104,7 @@ def main(
         verbose=verbose,
         trust_all=trust_all,
         json_output=json_output,
+        no_update_check=no_update_check,
     )
     ctx.obj = app_ctx
 
@@ -108,6 +113,9 @@ def main(
 
     # Default action: update skills
     _run_update(app_ctx, skills)
+
+    # Check for newer version after the main action
+    _maybe_check_for_update(app_ctx)
 
 
 def _run_update(ctx: Context, skills: str | None) -> None:
@@ -257,6 +265,37 @@ def list_backups(ctx: Context) -> None:
         )
 
     ctx.console.print(table)
+
+
+def _maybe_check_for_update(ctx: Context) -> None:
+    """Print an upgrade notice if a newer version is available."""
+    if ctx.no_update_check or ctx.json_output:
+        return
+
+    from agent_skills_updater.updater import check_for_update
+
+    current, latest, needs_update = check_for_update()
+    if needs_update:
+        ctx.console.print(
+            f"\n[bold yellow]A new version is available: v{current} -> v{latest}[/]\n"
+            f"Run [bold]pip install --upgrade agent-skills-updater[/] to update."
+        )
+
+
+@main.command("self-update")
+@pass_context
+def self_update(ctx: Context) -> None:
+    """Update agent-skills-updater to the latest version from PyPI."""
+    from agent_skills_updater.updater import run_self_update
+
+    ctx.console.print("Checking for updates...")
+    success, message = run_self_update()
+
+    if success:
+        ctx.console.print(f"[bold green]{message}[/]")
+    else:
+        ctx.console.print(f"[bold red]{message}[/]")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

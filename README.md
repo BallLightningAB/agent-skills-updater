@@ -1,6 +1,6 @@
 # Agent Skills Updater
 
-![Version](https://img.shields.io/badge/version-0.1.8-blue.svg)
+![Version](https://img.shields.io/badge/version-0.1.9-blue.svg)
 ![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)
 ![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)
 
