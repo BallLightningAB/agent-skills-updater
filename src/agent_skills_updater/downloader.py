@@ -277,10 +277,10 @@ def download_repos(config: AppConfig, ctx: Context) -> list[DownloadResult]:
             progress.remove_task(task)
 
             if result.success:
-                ctx.console.print(f"  [green]✓[/] {repo.name}")
+                ctx.console.print(f"  [green]OK[/] {repo.name}")
             else:
                 ctx.console.print(
-                    f"  [red]✗[/] {repo.name}: {result.error}"
+                    f"  [red]FAIL[/] {repo.name}: {result.error}"
                 )
 
             results.append(result)

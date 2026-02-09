@@ -117,7 +117,7 @@ def _run_update(ctx: Context, skills: str | None) -> None:
     config = ctx.load_config()
 
     if ctx.dry_run:
-        ctx.console.print("[bold yellow]Dry run mode[/] — no changes will be made.")
+        ctx.console.print("[bold yellow]Dry run mode[/] - no changes will be made.")
 
     if ctx.verbose:
         ctx.console.print(f"[dim]Config: {ctx.config_path or 'default'}[/]")
@@ -186,9 +186,9 @@ def list(ctx: Context) -> None:
     for name, entry in sorted(entries.items()):
         table.add_row(
             name,
-            entry.get("source", "—"),
-            entry.get("installedAt", "—"),
-            entry.get("updatedAt", "—"),
+            entry.get("source", "-"),
+            entry.get("installedAt", "-"),
+            entry.get("updatedAt", "-"),
         )
 
     ctx.console.print(table)
@@ -210,7 +210,7 @@ def rollback(ctx: Context, skill: str | None) -> None:
     from agent_skills_updater.backup import restore_backup
 
     if ctx.dry_run:
-        ctx.console.print("[bold yellow]Dry run mode[/] — no changes will be made.")
+        ctx.console.print("[bold yellow]Dry run mode[/] - no changes will be made.")
 
     success = restore_backup(config, ctx, skill_name=skill)
 
