@@ -4,11 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "agent-skills-updater"
-version = "0.1.1"
+version = "0.1.2"
 description = "Automated skill management for AI coding assistants"
 readme = "README.md"
-license = { text = "Apache-2.0" }
-license-files = ["LICENSE.md"]
+license = "Apache-2.0"
 requires-python = ">=3.12"
 authors = [
     { name = "Ball Lightning AB", email = "dev@balllightning.cloud" },

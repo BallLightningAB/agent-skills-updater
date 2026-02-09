@@ -50,15 +50,15 @@ GitHub environments add a layer of protection — only the `publish.yml` workflo
 Once Steps 2 and 3 are done, you can publish to PyPI:
 
 1. Go to [https://github.com/BallLightningAB/agent-skills-updater/releases/new](https://github.com/BallLightningAB/agent-skills-updater/releases/new)
-2. Click **"Choose a tag"** → type `v0.1.1` → click **"Create new tag: v0.1.1 on publish"**
-3. **Release title**: `v0.1.1 — Python Rewrite`
+2. Click **"Choose a tag"** → type `v0.1.2` → click **"Create new tag: v0.1.2 on publish"**
+3. **Release title**: `v0.1.2 — Python Rewrite`
 4. **Description** (suggested):
    ```
-   # Agent Skills Updater v0.1.1
+   # Agent Skills Updater v0.1.2
 
    Automated skill management for AI coding assistants. Keep your agent skills up-to-date across **Windsurf**, **Cursor**, **Claude Code**, **GitHub Copilot**, **Opencode**, and other AI-powered IDEs.
 
-   ## What's New in v0.1.1
+   ## What's New in v0.1.2
    - **Complete Python rewrite** (replaces PowerShell version)
    - **Cross-platform**: Windows, macOS, Linux
    - **Easy install**: `pip install agent-skills-updater`
@@ -95,7 +95,7 @@ pip install agent-skills-updater
 
 # Verify CLI works
 agent-skills-update --version
-# Should print: agent-skills-update, version 0.1.1
+# Should print: agent-skills-update, version 0.1.2
 
 agent-skills-update --help
 # Should show all commands and options
