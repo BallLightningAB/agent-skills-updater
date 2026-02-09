@@ -1,6 +1,9 @@
 # User-specific config (use legacy/agent-skills-config.example.yaml as template)
 agent-skills-config.yaml
 
+# Private launch planning (not tracked)
+LAUNCH-PLAYBOOK.md
+
 # Logs
 *.log
 
