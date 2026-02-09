@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import io
+import os
 import shutil
+import stat
 import subprocess
 import zipfile
 from dataclasses import dataclass
@@ -17,6 +19,15 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 if TYPE_CHECKING:
     from agent_skills_updater.cli import Context
     from agent_skills_updater.config import AppConfig, RepoConfig
+
+
+def _rmtree(path: Path) -> None:
+    """Remove a directory tree, handling read-only files on Windows."""
+    def _on_error(func, fpath, _exc_info):
+        os.chmod(fpath, stat.S_IWRITE)
+        func(fpath)
+
+    shutil.rmtree(path, onexc=_on_error)
 
 
 @dataclass
@@ -175,7 +186,7 @@ def _download_one(
 
     # Clean up any previous download
     if dest.exists():
-        shutil.rmtree(dest)
+        _rmtree(dest)
 
     try:
         if git_available:
@@ -194,7 +205,7 @@ def _download_one(
                 )
             try:
                 if dest.exists():
-                    shutil.rmtree(dest)
+                    _rmtree(dest)
                 dest.mkdir(parents=True, exist_ok=True)
                 _archive_download(repo, dest, ctx)
                 return DownloadResult(repo=repo, local_path=dest, success=True)

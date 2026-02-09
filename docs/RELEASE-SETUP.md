@@ -49,13 +49,19 @@ GitHub environments add a layer of protection — only the `publish.yml` workflo
 
 ## Step 4: Create Your First Release
 
+> **v0.1.4 tested successfully on 2026-02-09** — PyPI install, dry-run, install, list, force-update, backup, rollback, and JSON output all verified on Windows. CI passes on all 6 matrix combinations (ubuntu/macos/windows × Python 3.12/3.13).
+>
+> **Known fix shipped in v0.1.5**: `shutil.rmtree` fails on Windows when cleaning up git clone directories (read-only pack files). Fixed by adding a `_rmtree` helper with `onexc` handler in `downloader.py`. Cross-platform safe (no-op on Linux/macOS).
+>
+> **CLI note**: Global flags (`--config`, `--verbose`, `--dry-run`, `--force`, etc.) must come **before** subcommands (`list`, `rollback`, `list-backups`). This is standard Click group behaviour.
+
 Once Steps 2 and 3 are done, you can publish to PyPI:
 
 1. Go to [https://github.com/BallLightningAB/agent-skills-updater/releases/new](https://github.com/BallLightningAB/agent-skills-updater/releases/new)
 2. Click **"Choose a tag"** → type `v{VERSION}` → click **"Create new tag: v{VERSION} on publish"**
 3. **Release title**: `Agent Skills Updater v{VERSION} — Keep Your AI Coding Skills in Sync`
 4. **Description** (suggested):
-   ```
+
    # Agent Skills Updater v{VERSION}
 
    **One command to keep all your AI coding skills up-to-date.**
@@ -112,7 +118,6 @@ Once Steps 2 and 3 are done, you can publish to PyPI:
    - **PyPI**: https://pypi.org/project/agent-skills-updater/
    - **Discover skills**: https://skills.sh
    - **Apache-2.0 licensed**
-   ```
 5. Click **"Publish release"**
 6. Go to the **Actions** tab to watch the `Publish to PyPI` workflow run
 7. If you set up required reviewers, you'll need to approve the deployment
@@ -185,13 +190,13 @@ agent-skills-update --config ~/agent-skills-config.yaml --verbose
 
 ```powershell
 # Check installed skills
-agent-skills-update list --config ~/agent-skills-config.yaml
+agent-skills-update --config ~/agent-skills-config.yaml list
 
 # Check lockfile was created
 Get-Content ~/test-skills-output/../.skill-lock.json
 
 # Check backups
-agent-skills-update list-backups --config ~/agent-skills-config.yaml
+agent-skills-update --config ~/agent-skills-config.yaml list-backups
 ```
 
 ### 6e. Test rollback
@@ -201,13 +206,13 @@ agent-skills-update list-backups --config ~/agent-skills-config.yaml
 agent-skills-update --config ~/agent-skills-config.yaml --force --verbose
 
 # Rollback to previous state
-agent-skills-update rollback --config ~/agent-skills-config.yaml --verbose
+agent-skills-update --config ~/agent-skills-config.yaml --verbose rollback
 ```
 
 ### 6f. Test JSON output (for CI/automation)
 
 ```powershell
-agent-skills-update list --config ~/agent-skills-config.yaml --json
+agent-skills-update --config ~/agent-skills-config.yaml --json list
 ```
 
 ---
@@ -230,3 +235,4 @@ Remove-Item -Recurse -Force ~/test-skills-output
 | `pip install` shows old version | Wait 1-2 min for PyPI CDN to update, then `pip install --no-cache-dir agent-skills-updater` |
 | Git clone fails in integration test | Ensure the repo URL is correct and accessible (public or with credentials) |
 | Permission denied on skill path | Run terminal as admin, or choose a path you have write access to |
+| `PermissionError` on Windows during git cleanup | Fixed in v0.1.5 — `_rmtree` helper handles read-only `.git` pack files. Update with `pip install --upgrade agent-skills-updater` |
