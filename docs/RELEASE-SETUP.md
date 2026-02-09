@@ -2,6 +2,8 @@
 
 This guide walks you through setting up PyPI trusted publishing and running your first integration test.
 
+> **Version**: Before creating a release, check the current version in `pyproject.toml` (line 7) or run `python -c "import agent_skills_updater; print(agent_skills_updater.__version__)"`. Use that version wherever `{VERSION}` appears below.
+
 ---
 
 ## Step 1: Create a PyPI Account (if needed)
@@ -50,34 +52,66 @@ GitHub environments add a layer of protection — only the `publish.yml` workflo
 Once Steps 2 and 3 are done, you can publish to PyPI:
 
 1. Go to [https://github.com/BallLightningAB/agent-skills-updater/releases/new](https://github.com/BallLightningAB/agent-skills-updater/releases/new)
-2. Click **"Choose a tag"** → type `v0.1.3` → click **"Create new tag: v0.1.3 on publish"**
-3. **Release title**: `v0.1.3 — Python Rewrite`
+2. Click **"Choose a tag"** → type `v{VERSION}` → click **"Create new tag: v{VERSION} on publish"**
+3. **Release title**: `Agent Skills Updater v{VERSION} — Keep Your AI Coding Skills in Sync`
 4. **Description** (suggested):
    ```
-   # Agent Skills Updater v0.1.3
+   # Agent Skills Updater v{VERSION}
 
-   Automated skill management for AI coding assistants. Keep your agent skills up-to-date across **Windsurf**, **Cursor**, **Claude Code**, **GitHub Copilot**, **Opencode**, and other AI-powered IDEs.
+   **One command to keep all your AI coding skills up-to-date.**
 
-   ## What's New in v0.1.3
-   - **Complete Python rewrite** (replaces PowerShell version)
-   - **Cross-platform**: Windows, macOS, Linux
-   - **Easy install**: `pip install agent-skills-updater`
-   - **Rich CLI**: dry-run, force, JSON output, verbose mode
-   - **Smart downloads**: Git clone with archive fallback
-   - **Security**: Interactive allowlist for non-GitHub hosts
-   - **Flexible repos**: Supports 4 repository structures
-   - **Atomic operations**: Lockfile with UTC timestamps
-   - **Safe updates**: Timestamped backups with rollback
-   - **Production ready**: 44 tests, CI on 3 OS × 2 Python versions
+   If you use AI coding assistants like Windsurf, Cursor, Claude Code, GitHub Copilot, or any of the 40+ IDEs and agentic tools that support skills — you've probably noticed that keeping skill files in sync across tools and machines is a pain. This tool fixes that.
 
-   ## Quick Start
+   Agent Skills Updater pulls skills from any Git repository, handles four different repo structures automatically, and copies them to the right places. Configure once with a simple YAML file, then run a single command whenever you want to update or use a scheduler.
+
+   ## Install
+
    ```bash
    pip install agent-skills-updater
-   agent-skills-update --help
    ```
 
-   ## Migration from PowerShell
-   The original PowerShell version is preserved in the `legacy/` folder. Your existing `agent-skills-config.yaml` files are fully compatible with the Python version.
+   ## What's New in v{VERSION}
+
+   - **Multi-source skill management** — Pull skills from any number of Git repositories with a single command
+   - **Works with 40+ IDEs** — Windsurf, Cursor, Claude Code, GitHub Copilot, Opencode, Cline, Roo Code, and many more
+   - **Structure-aware** — Automatically handles standard, root, template, and multi-skill repo layouts
+   - **Safe by default** — Dry-run mode, automatic backups before every update, and one-command rollback
+   - **Lockfile tracking** — Atomic writes to `.skill-lock.json` with precise UTC timestamps, so you always know what's installed and when
+   - **Security built in** — GitHub repos work out of the box; other hosts require explicit approval via an interactive allowlist
+   - **Cross-platform** — Windows, macOS, Linux. Python 3.12+
+   - **CI-friendly** — `--trust-all` flag for automation, `--json` output for scripting
+
+   ## Quick Start
+
+   ```bash
+   # Install
+   pip install agent-skills-updater
+
+   # Preview what would change
+   agent-skills-update --dry-run --verbose
+
+   # Update all skills
+   agent-skills-update
+
+   # Update specific skills only
+   agent-skills-update --skills copywriting,seo-audit
+
+   # Roll back if something goes wrong
+   agent-skills-update rollback
+   ```
+
+   ## Why This Exists
+
+   AI skills are becoming a core part of how developers work with coding assistants — but the ecosystem is fragmented. Skills live across dozens of repos with different structures, and there's no standard way to keep them updated. This tool brings order to that.
+
+   Built by [Nicolas Brulay](https://github.com/BallLightningAB) of [Ball Lightning AB](https://balllightning.cloud) as part of the open-source tooling around AI-assisted development. Follow the build journey on [The Builder Coil](https://thebuildercoil.com) and support me on [Ko-fi](https://ko-fi.com/balllightning) if you like what I'm building.
+
+   ## Links
+
+   - **GitHub**: https://github.com/BallLightningAB/agent-skills-updater
+   - **PyPI**: https://pypi.org/project/agent-skills-updater/
+   - **Discover skills**: https://skills.sh
+   - **Apache-2.0 licensed**
    ```
 5. Click **"Publish release"**
 6. Go to the **Actions** tab to watch the `Publish to PyPI` workflow run
@@ -95,7 +129,7 @@ pip install agent-skills-updater
 
 # Verify CLI works
 agent-skills-update --version
-# Should print: agent-skills-update, version 0.1.3
+# Should print: agent-skills-update, version {VERSION}
 
 agent-skills-update --help
 # Should show all commands and options
