@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock, patch
 
-import pytest
-
 from agent_skills_updater.updater import (
     _version_tuple,
     check_for_update,
